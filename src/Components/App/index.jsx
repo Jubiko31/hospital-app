@@ -1,9 +1,23 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Register from '../LoginPage/Register';
 import './App.css';
 
-function App() {
+const App = () => {
   return (
-    <>Hello World</>
+   <Router>
+    <Routes>
+      <Route 
+        path="/register"
+        exact
+        element={
+          <>
+            <Register />
+          </>
+        }
+      />
+    </Routes>
+   </Router>
   );
 }
 
