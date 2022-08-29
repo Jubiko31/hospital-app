@@ -59,3 +59,17 @@ export const deleteReception = async (id) => {
     console.log(error);
   }
 };
+
+export const editReception = async (id, body) => {
+  try {
+    const { data } = await axios.patch(`${API}receptions/${id}`, body, {
+      headers: {
+        'x-access-token': localStorage.getItem('token'),
+      },
+    });
+
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+}
