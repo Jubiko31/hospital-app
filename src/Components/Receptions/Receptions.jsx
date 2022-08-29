@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { DoctorContext } from '../../contexts/DoctorContext';
 import { getAll, getDoctors } from '../../services/api';
 import Error from '../AlertError/Error';
 import HeaderComponent from '../Header/Header';
 import List from '../List';
+import AddField from '../AddField';
 import './index.css';
 
 const Receptions = () => {
@@ -13,6 +15,7 @@ const Receptions = () => {
   const [doctors, setDoctors] = useState([]);
   const [filtered, setFiltered] = useState([]);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const allReceptions = getAll();
@@ -21,7 +24,11 @@ const Receptions = () => {
         setReceptions(data);
       })
       .catch((err) => {
-        console.log(err);
+        const { status } = err.response;
+        if (status === 401) {
+          navigate('/login')
+          localStorage.removeItem('token');
+        }
       });
 
     const doctors = getDoctors();
@@ -31,6 +38,10 @@ const Receptions = () => {
       });
   }, []);
 
+  const setAddedData = (data) => {
+    setReceptions(data);
+  };
+  
   const setAfterDelete = (id) => {
     setIdToDelete(id);
   };
@@ -50,7 +61,12 @@ const Receptions = () => {
     <DoctorContext.Provider value={doctors}>
       {error && <Error error={error} setError={setError} />}
       <HeaderComponent page="Medical Receptions" />
-
+      <AddField
+        receptions={receptions}
+        setReceptions={setReceptions}
+        setAddedData={setAddedData}
+        setError={setError}
+      />
       <table className="table table-bordered table-hover" id="reception-table">
         <thead>
           <tr>
