@@ -2,7 +2,7 @@ import React from 'react';
 import { Modal, Button, ModalTitle } from 'react-bootstrap';
 import { deleteReception } from '../../services/api';
 
-function Delete({ setIdToDelete, idToDelete, confirmDelete, setError }) {
+const Delete = ({ setIdToDelete, idToDelete, confirmDelete, setError }) => {
   const confirm = async (id) => {
     try {
       setIdToDelete(null)
