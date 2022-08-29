@@ -5,7 +5,7 @@ import { editReception } from '../../services/api';
 import { validName, valiDate } from '../../validators';
 
 const Edit = ({
-  setIdToEdit, idToEdit, confirmEdit, receptions, setReceptions,
+  setIdToEdit, idToEdit, receptions, setReceptions,
 }) => {
   const [editedReception, setEditedReception] = useState([{
     patientName: '', doctorId: '', date: '', complaint: '',

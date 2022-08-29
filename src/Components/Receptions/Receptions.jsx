@@ -8,6 +8,7 @@ import List from '../List';
 import AddField from '../AddField';
 import Delete from '../Modals/Delete';
 import Edit from '../Modals/Edit';
+import SortInput from '../Sort';
 import './index.css';
 
 const Receptions = () => {
@@ -15,6 +16,7 @@ const Receptions = () => {
   const [idToEdit, setIdToEdit] = useState(null);
   const [receptions, setReceptions] = useState([]);
   const [doctors, setDoctors] = useState([]);
+  const [sortValue, setSortValue] = useState({ value: '', direction: '' });
   const [filtered, setFiltered] = useState([]);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -51,6 +53,29 @@ const Receptions = () => {
     setIdToEdit(id);
   };
 
+  const sortByValue = () => {
+    const { value, direction } = sortValue;
+    if (value && direction) {
+      const sortedValues = [...receptions].sort((a, b) => {
+        if (value === 'doctor') {
+          const firstValue = a.doctor.doctorName.toLowerCase();
+          const secondValue = b.doctor.doctorName.toLowerCase();
+          if (firstValue < secondValue) return -1;
+          if (firstValue > secondValue) return 1;
+          return 0;
+        }
+        const firstValue = a[value].toLowerCase();
+        const secondValue = b[value].toLowerCase();
+        if (firstValue < secondValue) return -1;
+        if (firstValue > secondValue) return 1;
+        return 0;
+      });
+
+      if (direction === 'desc') sortedValues.reverse();
+      setReceptions(sortedValues);
+    }
+  };
+
   const dataToShow = filtered.length ? filtered : receptions;
 
   return (
@@ -80,6 +105,11 @@ const Receptions = () => {
         setError={setError}
       />
       )}
+       <SortInput
+        sortByValue={sortByValue}
+        setSortValue={setSortValue}
+        sortValue={sortValue}
+      />
       <table className="table table-bordered table-hover" id="reception-table">
         <thead>
           <tr>
