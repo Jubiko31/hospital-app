@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './index.css';
 
-function SortInput({ sortByValue, sortValue, setSortValue }) {
+const SortInput = ({ sortByValue, sortValue, setSortValue }) => {
   const [isSelected, setIsSelected] = useState(null);
 
   const setSortValues = (inputData) => {
