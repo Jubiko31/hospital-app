@@ -25,7 +25,7 @@ const InputForm = styled.form`
   border-radius: 4px;
 `;
 
-function Login() {
+const Login = () => {
   const navigate = useNavigate();
   const [credentials, setCredentials] = useState({ email: '', password: '' });
   const [error, setError] = useState(null);
