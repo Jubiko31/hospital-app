@@ -1,5 +1,6 @@
 import React from 'react';
 import { Alert } from 'react-bootstrap';
+import '../LoginPage/login.css';
 
 const Success = ({ success, setSuccess }) => {
   return (

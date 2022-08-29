@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Login from '../LoginPage/Login';
 import Register from '../LoginPage/Register';
 import './App.css';
 
@@ -11,9 +12,14 @@ const App = () => {
         path="/register"
         exact
         element={
-          <>
             <Register />
-          </>
+        }
+      />
+      <Route 
+        path="/login"
+        exact
+        element={
+            <Login />
         }
       />
     </Routes>
