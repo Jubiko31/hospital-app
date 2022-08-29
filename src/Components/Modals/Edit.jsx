@@ -24,31 +24,30 @@ const Edit = ({
     const errors = [];
     const { patientName, date, complaint } = editedReception;
     if (!patientName && !date && !doctorId && !complaint) {
-      return setError('At least one input should be defined!.');
-    }
-    if (patientName) {
-      if (!patientName.trim() || !validName(patientName)) errors.push('Invalid name format.');
-    }
-    if (complaint) {
-      if (!complaint.trim()) errors.push('Invalid text input.');
-    }
-    if (date) {
-      if (!valiDate(date)) errors.push('Invalid date format');
-    }
-
-    if (errors.length) {
-      setError(errors);
-    }
-    else {
-      
-      const edited = await editReception(id, editedReception);
-      if (edited) {
-        setIdToEdit(null);
-        setReceptions(edited);
+      setError('At least one input should be defined.');
+    } else {
+      if (patientName) {
+        if (!patientName.trim() || !validName(patientName)) errors.push('Invalid name format.');
+      }
+      if (complaint) {
+        if (!complaint.trim()) errors.push('Invalid text input.');
+      }
+      if (date) {
+        if (!valiDate(date)) errors.push('Invalid date format');
+      }
+      if (errors.length) {
+        setError(errors);
+      }
+      else {
+        const edited = await editReception(id, editedReception);
+        if (edited) {
+          setIdToEdit(null);
+          setReceptions(edited);
+        }
       }
     }
     } catch (error) {
-      console.error(error);
+      setError('Oops! Something&lsquo;s wrong I can feel it. Please try again later');
     }
   };
 
