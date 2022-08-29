@@ -45,3 +45,17 @@ export const addNewReception = async (body) => {
     console.log(error);
   }
 };
+
+export const deleteReception = async (id) => {
+  try {
+    const { data } = await axios.delete(`${API}receptions/${id}`, {
+      headers: {
+        'x-access-token': localStorage.getItem('token'),
+      },
+    });
+
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
