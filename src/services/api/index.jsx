@@ -22,3 +22,13 @@ export const login = async (body) => {
 
   return data;
 };
+
+export const getDoctors = async () => {
+  const { data } = await axios.get(`${API}doctors/`, {
+    headers: {
+      'x-access-token': localStorage.getItem('token'),
+    },
+  });
+
+  return data;
+};

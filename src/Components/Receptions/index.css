@@ -1,0 +1,54 @@
+#reception-table {
+    position: absolute;
+    width: 90%;
+    height: 50%;
+    top: 52% !important;
+    left: 3%;
+    border: 1.5px solid black;
+    border-collapse: collapse;
+    margin: 20px;
+    letter-spacing: 1px;
+    text-align: center;
+    background-color: #fff;
+}
+
+
+.table-bordered {
+    border: 1px solid #000 !important;
+}
+
+thead {
+    background-color: #c4c4c4;
+}
+
+.icons {
+    margin-top: 7px;
+    margin-left: 10px;
+    width: 9%;
+    cursor: pointer;
+}
+.icons:hover {
+    transform: scale(1.2);
+}
+.add-filter {
+    position: absolute;
+    left: 85%;
+    top: 41%;
+    display: flex;
+    flex-direction: row;
+    padding-right: 30px;
+}
+.filter-add-btn {
+    cursor: pointer;
+    margin-left: 10px;
+}
+.filter-add-btn:hover {
+    transform: scale(1.2);
+}
+.filter-btn {
+    background: none;
+    border: none;
+}
+.hidden {
+    display: none;
+}
