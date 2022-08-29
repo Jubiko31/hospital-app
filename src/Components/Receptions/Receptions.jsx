@@ -6,7 +6,7 @@ import HeaderComponent from '../Header/Header';
 import List from '../List';
 import './index.css';
 
-function Receptions() {
+const Receptions = () => {
   const [deleteItem, setDeleteItem] = useState(null);
   const [idToDelete, setIdToDelete] = useState(null);
   const [editItem, setEditItem] = useState(null);
@@ -15,7 +15,7 @@ function Receptions() {
   const [doctors, setDoctors] = useState([]);
   const [filtered, setFiltered] = useState([]);
   const [error, setError] = useState(null);
-  
+
   useEffect(() => {
     const allReceptions = getAll();
     allReceptions
