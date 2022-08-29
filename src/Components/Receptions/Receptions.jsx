@@ -7,6 +7,7 @@ import HeaderComponent from '../Header/Header';
 import List from '../List';
 import AddField from '../AddField';
 import Delete from '../Modals/Delete';
+import Edit from '../Modals/Edit';
 import './index.css';
 
 const Receptions = () => {
@@ -66,6 +67,15 @@ const Receptions = () => {
       <Delete
         idToDelete={idToDelete}
         setIdToDelete={setIdToDelete}
+        setReceptions={setReceptions}
+        setError={setError}
+      />
+      )}
+      {idToEdit && (
+      <Edit
+        idToEdit={idToEdit}
+        setIdToEdit={setIdToEdit}
+        receptions={receptions}
         setReceptions={setReceptions}
         setError={setError}
       />
