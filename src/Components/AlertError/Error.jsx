@@ -1,5 +1,6 @@
 import React from 'react';
 import { Toast } from 'react-bootstrap';
+import '../LoginPage/login.css';
 
 const Error = ({ error, setError }) => {
   return (
