@@ -51,7 +51,7 @@ const Button = styled.button`
     }
 `;
 
-function HeaderComponent({ page }) {
+const HeaderComponent = ({ page }) => {
   const navigate = useNavigate();
   const logout = () => {
     localStorage.removeItem('token');

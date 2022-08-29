@@ -1,7 +1,7 @@
 import React from 'react';
 import { Alert } from 'react-bootstrap';
 
-function Success({ success, setSuccess }) {
+const Success = ({ success, setSuccess }) => {
   return (
     <Alert
       variant="success"

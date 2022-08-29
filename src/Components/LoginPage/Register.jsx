@@ -26,7 +26,7 @@ const InputForm = styled.form`
   border-radius: 4px;
 `;
 
-function Register() {
+const Register = () => {
   const API = 'http://localhost:4001/';
   const register = async (data) => {
     const res = await axios.post(`${API}registration`, data);

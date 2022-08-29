@@ -1,7 +1,7 @@
 import React from 'react';
 import { Toast } from 'react-bootstrap';
 
-function Error({ error, setError }) {
+const Error = ({ error, setError }) => {
   return (
     <Toast
       className="position-absolute alert-error"
