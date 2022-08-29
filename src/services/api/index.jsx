@@ -32,3 +32,16 @@ export const getDoctors = async () => {
 
   return data;
 };
+
+export const addNewReception = async (body) => {
+  try {
+    const { data } = await axios.post(`${API}receptions`, body, {
+      headers: {
+        'x-access-token': localStorage.getItem('token'),
+      },
+    });
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};

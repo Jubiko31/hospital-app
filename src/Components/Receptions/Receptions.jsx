@@ -4,6 +4,7 @@ import { getAll, getDoctors } from '../../services/api';
 import Error from '../AlertError/Error';
 import HeaderComponent from '../Header/Header';
 import List from '../List';
+import AddField from '../AddField';
 import './index.css';
 
 const Receptions = () => {
@@ -31,6 +32,10 @@ const Receptions = () => {
       });
   }, []);
 
+  const setAddedData = (data) => {
+    setReceptions(data);
+  };
+  
   const setAfterDelete = (id) => {
     setIdToDelete(id);
   };
@@ -50,7 +55,12 @@ const Receptions = () => {
     <DoctorContext.Provider value={doctors}>
       {error && <Error error={error} setError={setError} />}
       <HeaderComponent page="Medical Receptions" />
-
+      <AddField
+        receptions={receptions}
+        setReceptions={setReceptions}
+        setAddedData={setAddedData}
+        setError={setError}
+      />
       <table className="table table-bordered table-hover" id="reception-table">
         <thead>
           <tr>
