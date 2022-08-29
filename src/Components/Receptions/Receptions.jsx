@@ -7,9 +7,7 @@ import List from '../List';
 import './index.css';
 
 const Receptions = () => {
-  const [deleteItem, setDeleteItem] = useState(null);
   const [idToDelete, setIdToDelete] = useState(null);
-  const [editItem, setEditItem] = useState(null);
   const [idToEdit, setIdToEdit] = useState(null);
   const [receptions, setReceptions] = useState([]);
   const [doctors, setDoctors] = useState([]);
@@ -35,11 +33,9 @@ const Receptions = () => {
 
   const setAfterDelete = (id) => {
     setIdToDelete(id);
-    setDeleteItem(true);
   };
   const setAfterEdit = (id) => {
     setIdToEdit(id);
-    setEditItem(true);
   };
 
   const confirmEdit = (data) => {
@@ -71,11 +67,7 @@ const Receptions = () => {
               listData={{ ...item }}
               key={item.id}
               setAfterDelete={setAfterDelete}
-              setIdToDelete={setIdToDelete}
               setAfterEdit={setAfterEdit}
-              setEditItem={setEditItem}
-              editItem={editItem}
-              confirmEdit={confirmEdit}
             />
           ))}
         </tbody>
