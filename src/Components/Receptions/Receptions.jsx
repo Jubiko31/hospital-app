@@ -49,15 +49,6 @@ const Receptions = () => {
   const setAfterEdit = (id) => {
     setIdToEdit(id);
   };
-  
-  const confirmDelete = (data) => {
-    setReceptions(data);
-  };
-  const confirmEdit = (data) => {
-    setReceptions(data);
-  };
-
-
 
   const dataToShow = filtered.length ? filtered : receptions;
 
@@ -73,9 +64,9 @@ const Receptions = () => {
       />
       {idToDelete && (
       <Delete
-        confirmDelete={confirmDelete}
         idToDelete={idToDelete}
         setIdToDelete={setIdToDelete}
+        setReceptions={setReceptions}
         setError={setError}
       />
       )}
