@@ -6,6 +6,7 @@ import Error from '../AlertError/Error';
 import HeaderComponent from '../Header/Header';
 import List from '../List';
 import AddField from '../AddField';
+import Delete from '../Modals/Delete';
 import './index.css';
 
 const Receptions = () => {
@@ -49,12 +50,6 @@ const Receptions = () => {
     setIdToEdit(id);
   };
 
-  const confirmEdit = (data) => {
-    setReceptions(data);
-  };
-
-
-
   const dataToShow = filtered.length ? filtered : receptions;
 
   return (
@@ -67,6 +62,14 @@ const Receptions = () => {
         setAddedData={setAddedData}
         setError={setError}
       />
+      {idToDelete && (
+      <Delete
+        idToDelete={idToDelete}
+        setIdToDelete={setIdToDelete}
+        setReceptions={setReceptions}
+        setError={setError}
+      />
+      )}
       <table className="table table-bordered table-hover" id="reception-table">
         <thead>
           <tr>
@@ -84,6 +87,7 @@ const Receptions = () => {
               key={item.id}
               setAfterDelete={setAfterDelete}
               setAfterEdit={setAfterEdit}
+              setIdToDelete={setIdToDelete}
             />
           ))}
         </tbody>

@@ -11,12 +11,6 @@ const List = ({
   } = listData;
   const { id: docId } = doctor;
   const doctors = useContext(DoctorContext);
-  const handleClick = (id) => {
-    setAfterDelete(id);
-  };
-  const handleClickEdit = (id) => {
-    setAfterEdit(id);
-  };
 
   return (
     <tr key={id}>
@@ -43,13 +37,13 @@ const List = ({
           className="icons"
           src="https://img.icons8.com/external-colours-bomsymbols-/91/000000/external-bin-business-marketing-colors-set-2-colours-bomsymbols--2.png"
           alt="del"
-          onClick={() => handleClick(id)}
+          onClick={() => setAfterDelete(id)}
         />
         <img
           className="icons"
           src="https://img.icons8.com/color/48/000000/pen.png"
           alt="edit"
-          onClick={() => handleClickEdit(id)}
+          onClick={() => setAfterEdit(id)}
         />
       </td>
     </tr>
