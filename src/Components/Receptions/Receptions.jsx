@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { DoctorContext } from '../../contexts/DoctorContext';
 import { getAll, getDoctors } from '../../services/api';
 import Error from '../AlertError/Error';
@@ -14,6 +15,7 @@ const Receptions = () => {
   const [doctors, setDoctors] = useState([]);
   const [filtered, setFiltered] = useState([]);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const allReceptions = getAll();
@@ -22,7 +24,11 @@ const Receptions = () => {
         setReceptions(data);
       })
       .catch((err) => {
-        console.log(err);
+        const { status } = err.response;
+        if (status === 401) {
+          navigate('/login')
+          localStorage.removeItem('token');
+        }
       });
 
     const doctors = getDoctors();

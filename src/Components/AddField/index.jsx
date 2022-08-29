@@ -15,23 +15,24 @@ const AddField = ({ setAddedData, setError }) => {
   const setNewValues = async () => {
     try {
       const errors = [];
-      const body = newReception;
       const {
         patientName, date, complaint, doctorId,
-      } = body;
+      } = newReception;
       if (!patientName.trim() || !date || !complaint.trim() || !doctorId) {
-        return setError('All fields are required');
+        setError('All fields are required');
       }
       if (!validName(patientName)) errors.push('Enter valid patient name.');
       if (!valiDate(date)) errors.push('Invalid date');
       if (!complaint.trim()) errors.push('Enter valid text format');
       if (errors.length) {
-        return setError(errors);
+        setError(errors);
+      } 
+      else {
+        const data = await addNewReception(newReception);
+        setAddedData(data);
       }
-      const data = await addNewReception(body);
-      setAddedData(data);
     } catch (error) {
-      console.error(error.message);
+      setError('Oops something went wrong! Please try again.')
     }
   };
 
