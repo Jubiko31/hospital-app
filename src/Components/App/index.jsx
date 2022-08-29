@@ -12,18 +12,14 @@ const App = () => {
         path="/register"
         exact
         element={
-          <>
             <Register />
-          </>
         }
       />
       <Route 
         path="/login"
         exact
         element={
-          <>
             <Login />
-          </>
         }
       />
     </Routes>
