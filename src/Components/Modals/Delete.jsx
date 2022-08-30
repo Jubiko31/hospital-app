@@ -2,15 +2,14 @@ import React from 'react';
 import { Modal, Button, ModalTitle } from 'react-bootstrap';
 import { deleteReception } from '../../services/api';
 
-const Delete = ({ setIdToDelete, idToDelete, confirmDelete, setReceptions, setError }) => {
+const Delete = ({ setIdToDelete, idToDelete, setError, afterDelete }) => {
   const confirm = async (id) => {
     try {
       const removed = await deleteReception(id);
       if (removed) {
         setIdToDelete(null);
-        setReceptions(removed);
+        afterDelete(removed);
       }
-      
     } catch (err) {
       setError('Oops! Something did not really went well. Please try again')
     }

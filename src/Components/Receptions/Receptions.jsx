@@ -13,6 +13,8 @@ import Filter from '../Filter';
 import { AddFilter } from '../../assets/svg/allSvgs';
 import './index.css';
 
+let initialData;
+
 const Receptions = () => {
   const [idToDelete, setIdToDelete] = useState(null);
   const [idToEdit, setIdToEdit] = useState(null);
@@ -22,7 +24,6 @@ const Receptions = () => {
   const [filtered, setFiltered] = useState([]);
   const [filterValue, setFilterValue] = useState({ isFilter: null, initialDate: '', toDate: '' });
   const [error, setError] = useState(null);
-  const initialData = [...receptions];
   const { isFilter } = filterValue;
   const navigate = useNavigate();
 
@@ -30,6 +31,7 @@ const Receptions = () => {
     const allReceptions = getAll();
     allReceptions
       .then((data) => {
+        initialData = data
         setReceptions(data);
       })
       .catch((err) => {
@@ -47,6 +49,17 @@ const Receptions = () => {
       });
   }, []);
 
+  const setAfterFilter = (returned) => {
+    setReceptions((oldReceptions) => {
+      return returned.filter((newReceptions) => {
+        const found = oldReceptions.findIndex(
+          (reception) => newReceptions.id === reception.id
+        );
+        return found > -1;
+      });
+    });
+  };
+
   const setAddedData = (data) => {
     setReceptions(data);
   };
@@ -57,6 +70,15 @@ const Receptions = () => {
   const setAfterEdit = (id) => {
     setIdToEdit(id);
   };
+
+  const afterDelete = (data) => {
+      initialData = data;
+      setAfterFilter(data);
+    }
+  const afterEdit = (data) => {
+      initialData = data;
+      setAfterFilter(data);
+  }
 
   const sortByValue = () => {
     const { value, direction } = sortValue;
@@ -83,20 +105,18 @@ const Receptions = () => {
   const handleDeleteFilter = () => {
     setFiltered([]);
     setFilterValue({ isFilter: false });
+    setReceptions(initialData)
   };
 
   const filter = () => {
     const { initialDate, toDate } = filterValue;
     if (initialDate < toDate) {
-      const filteredValues = initialData.filter((element) => {
+      const filteredValues = [...initialData].filter((element) => {
         const { date } = element;
-        if (date > initialDate && date < toDate) {
-          return true;
-        }
-        return false;
+        return (date > initialDate && date < toDate)
       });
 
-      setFiltered(filteredValues);
+      setReceptions(filteredValues);
     }
   };
 
@@ -116,7 +136,7 @@ const Receptions = () => {
       <Delete
         idToDelete={idToDelete}
         setIdToDelete={setIdToDelete}
-        setReceptions={setReceptions}
+        afterDelete={afterDelete}
         setError={setError}
       />
       )}
@@ -124,8 +144,7 @@ const Receptions = () => {
       <Edit
         idToEdit={idToEdit}
         setIdToEdit={setIdToEdit}
-        receptions={receptions}
-        setReceptions={setReceptions}
+        afterEdit={afterEdit}
         setError={setError}
       />
       )}
@@ -152,7 +171,6 @@ const Receptions = () => {
           filter={filter}
         />
       )}
-
       <table className="table table-bordered table-hover" id="reception-table">
         <thead>
           <tr>

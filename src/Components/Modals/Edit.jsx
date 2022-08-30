@@ -5,7 +5,7 @@ import { editReception } from '../../services/api';
 import { validName, valiDate } from '../../validators';
 
 const Edit = ({
-  setIdToEdit, idToEdit, receptions, setReceptions,
+  setIdToEdit, idToEdit, receptions, afterEdit
 }) => {
   const [editedReception, setEditedReception] = useState([{
     patientName: '', doctorId: '', date: '', complaint: '',
@@ -42,7 +42,7 @@ const Edit = ({
         const edited = await editReception(id, editedReception);
         if (edited) {
           setIdToEdit(null);
-          setReceptions(edited);
+          afterEdit(edited);
         }
       }
     }
