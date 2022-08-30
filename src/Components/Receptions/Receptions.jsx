@@ -11,7 +11,7 @@ import Edit from '../Modals/Edit';
 import SortInput from '../Sort';
 import './index.css';
 
-function Receptions() {
+const Receptions = () => {
   const [idToDelete, setIdToDelete] = useState(null);
   const [idToEdit, setIdToEdit] = useState(null);
   const [receptions, setReceptions] = useState([]);
