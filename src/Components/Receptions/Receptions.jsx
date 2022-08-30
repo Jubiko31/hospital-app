@@ -11,7 +11,7 @@ import Edit from '../Modals/Edit';
 import SortInput from '../Sort';
 import './index.css';
 
-const Receptions = () => {
+function Receptions() {
   const [idToDelete, setIdToDelete] = useState(null);
   const [idToEdit, setIdToEdit] = useState(null);
   const [receptions, setReceptions] = useState([]);
@@ -30,7 +30,7 @@ const Receptions = () => {
       .catch((err) => {
         const { status } = err.response;
         if (status === 401) {
-          navigate('/login')
+          navigate('/login');
           localStorage.removeItem('token');
         }
       });
@@ -45,7 +45,7 @@ const Receptions = () => {
   const setAddedData = (data) => {
     setReceptions(data);
   };
-  
+
   const setAfterDelete = (id) => {
     setIdToDelete(id);
   };
@@ -55,17 +55,13 @@ const Receptions = () => {
 
   const sortByValue = () => {
     const { value, direction } = sortValue;
+    let firstValue = '';
+    let secondValue = '';
     if (value && direction) {
       const sortedValues = [...receptions].sort((a, b) => {
-        if (value === 'doctor') {
-          const firstValue = a.doctor.doctorName.toLowerCase();
-          const secondValue = b.doctor.doctorName.toLowerCase();
-          if (firstValue < secondValue) return -1;
-          if (firstValue > secondValue) return 1;
-          return 0;
-        }
-        const firstValue = a[value].toLowerCase();
-        const secondValue = b[value].toLowerCase();
+        {value === 'doctor' ? firstValue = a.doctor.doctorName.toLowerCase() : firstValue = a[value].toLowerCase()}
+        {value === 'doctor' ? secondValue = b.doctor.doctorName.toLowerCase() : secondValue = b[value].toLowerCase()}
+        
         if (firstValue < secondValue) return -1;
         if (firstValue > secondValue) return 1;
         return 0;
@@ -105,7 +101,7 @@ const Receptions = () => {
         setError={setError}
       />
       )}
-       <SortInput
+      <SortInput
         sortByValue={sortByValue}
         setSortValue={setSortValue}
         sortValue={sortValue}
