@@ -146,6 +146,7 @@ const Receptions = () => {
         setIdToEdit={setIdToEdit}
         afterEdit={afterEdit}
         setError={setError}
+        receptions={receptions}
       />
       )}
       <SortInput
