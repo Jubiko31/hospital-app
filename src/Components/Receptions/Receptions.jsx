@@ -9,6 +9,8 @@ import AddField from '../AddField';
 import Delete from '../Modals/Delete';
 import Edit from '../Modals/Edit';
 import SortInput from '../Sort';
+import Filter from '../Filter';
+import { AddFilter } from '../../assets/svg/allSvgs';
 import './index.css';
 
 const Receptions = () => {
@@ -18,7 +20,10 @@ const Receptions = () => {
   const [doctors, setDoctors] = useState([]);
   const [sortValue, setSortValue] = useState({ value: '', direction: '' });
   const [filtered, setFiltered] = useState([]);
+  const [filterValue, setFilterValue] = useState({ isFilter: null, initialDate: '', toDate: '' });
   const [error, setError] = useState(null);
+  const initialData = [...receptions];
+  const { isFilter } = filterValue;
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -72,6 +77,29 @@ const Receptions = () => {
     }
   };
 
+  const handleAddFilter = () => {
+    setFilterValue({ isFilter: true });
+  };
+  const handleDeleteFilter = () => {
+    setFiltered([]);
+    setFilterValue({ isFilter: false });
+  };
+
+  const filter = () => {
+    const { initialDate, toDate } = filterValue;
+    if (initialDate < toDate) {
+      const filteredValues = initialData.filter((element) => {
+        const { date } = element;
+        if (date > initialDate && date < toDate) {
+          return true;
+        }
+        return false;
+      });
+
+      setFiltered(filteredValues);
+    }
+  };
+
   const dataToShow = filtered.length ? filtered : receptions;
 
   return (
@@ -106,6 +134,25 @@ const Receptions = () => {
         setSortValue={setSortValue}
         sortValue={sortValue}
       />
+      {!isFilter && (
+        <div className="add-filter">
+          Filter By Date:
+          <button className="filter-btn" onClick={handleAddFilter} type="button">
+          <AddFilter
+            className="filter-add-btn"
+          />
+          </button>
+        </div>
+      )}
+      {isFilter && (
+        <Filter
+          filterValue={filterValue}
+          setFilterValue={setFilterValue}
+          handleDeleteFilter={handleDeleteFilter}
+          filter={filter}
+        />
+      )}
+
       <table className="table table-bordered table-hover" id="reception-table">
         <thead>
           <tr>
