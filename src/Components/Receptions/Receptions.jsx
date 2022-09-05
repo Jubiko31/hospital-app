@@ -9,7 +9,11 @@ import AddField from '../AddField';
 import Delete from '../Modals/Delete';
 import Edit from '../Modals/Edit';
 import SortInput from '../Sort';
+import Filter from '../Filter';
+import { AddFilter } from '../../assets/svg/allSvgs';
 import './index.css';
+
+let initialData;
 
 const Receptions = () => {
   const [idToDelete, setIdToDelete] = useState(null);
@@ -18,13 +22,16 @@ const Receptions = () => {
   const [doctors, setDoctors] = useState([]);
   const [sortValue, setSortValue] = useState({ value: '', direction: '' });
   const [filtered, setFiltered] = useState([]);
+  const [filterValue, setFilterValue] = useState({ isFilter: null, initialDate: '', toDate: '' });
   const [error, setError] = useState(null);
+  const { isFilter } = filterValue;
   const navigate = useNavigate();
 
   useEffect(() => {
     const allReceptions = getAll();
     allReceptions
       .then((data) => {
+        initialData = data
         setReceptions(data);
       })
       .catch((err) => {
@@ -42,6 +49,17 @@ const Receptions = () => {
       });
   }, []);
 
+  const setAfterFilter = (returned) => {
+    setReceptions((oldReceptions) => {
+      return returned.filter((newReceptions) => {
+        const found = oldReceptions.findIndex(
+          (reception) => newReceptions.id === reception.id
+        );
+        return found > -1;
+      });
+    });
+  };
+
   const setAddedData = (data) => {
     setReceptions(data);
   };
@@ -52,6 +70,15 @@ const Receptions = () => {
   const setAfterEdit = (id) => {
     setIdToEdit(id);
   };
+
+  const afterDelete = (data) => {
+      initialData = data;
+      setAfterFilter(data);
+    }
+  const afterEdit = (data) => {
+      initialData = data;
+      setAfterFilter(data);
+  }
 
   const sortByValue = () => {
     const { value, direction } = sortValue;
@@ -72,6 +99,27 @@ const Receptions = () => {
     }
   };
 
+  const handleAddFilter = () => {
+    setFilterValue({ isFilter: true });
+  };
+  const handleDeleteFilter = () => {
+    setFiltered([]);
+    setFilterValue({ isFilter: false });
+    setReceptions(initialData)
+  };
+
+  const filter = () => {
+    const { initialDate, toDate } = filterValue;
+    if (initialDate < toDate) {
+      const filteredValues = [...initialData].filter((element) => {
+        const { date } = element;
+        return (date > initialDate && date < toDate)
+      });
+
+      setReceptions(filteredValues);
+    }
+  };
+
   const dataToShow = filtered.length ? filtered : receptions;
 
   return (
@@ -88,7 +136,7 @@ const Receptions = () => {
       <Delete
         idToDelete={idToDelete}
         setIdToDelete={setIdToDelete}
-        setReceptions={setReceptions}
+        afterDelete={afterDelete}
         setError={setError}
       />
       )}
@@ -96,9 +144,9 @@ const Receptions = () => {
       <Edit
         idToEdit={idToEdit}
         setIdToEdit={setIdToEdit}
-        receptions={receptions}
-        setReceptions={setReceptions}
+        afterEdit={afterEdit}
         setError={setError}
+        receptions={receptions}
       />
       )}
       <SortInput
@@ -106,6 +154,24 @@ const Receptions = () => {
         setSortValue={setSortValue}
         sortValue={sortValue}
       />
+      {!isFilter && (
+        <div className="add-filter">
+          Filter By Date:
+          <button className="filter-btn" onClick={handleAddFilter} type="button">
+          <AddFilter
+            className="filter-add-btn"
+          />
+          </button>
+        </div>
+      )}
+      {isFilter && (
+        <Filter
+          filterValue={filterValue}
+          setFilterValue={setFilterValue}
+          handleDeleteFilter={handleDeleteFilter}
+          filter={filter}
+        />
+      )}
       <table className="table table-bordered table-hover" id="reception-table">
         <thead>
           <tr>
